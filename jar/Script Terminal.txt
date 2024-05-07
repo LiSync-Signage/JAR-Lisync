@@ -1,0 +1,49 @@
+#!/bin/bash
+
+echo "Qual nome você quer dar ao seu diretório:"
+read nome
+if [-d "$nome"]
+then sudo rm -rf "$nome"
+fi
+
+sudo mkdir "$nome"
+
+echo "| ---------- Deixando seu diretório disponivel para todos os usuários: ---------- |"
+sudo chmod 777 "$nome"
+
+echo "| ---------- Entrando no diretório ---------- |"
+cd "$nome"
+
+echo "| ---------- Clonando repositório do Git ---------- |"
+git clone https://github.com/LiSync-Signage/JAR-Lisync.git
+sleep 2
+clear
+
+echo "| ---------- Entrando no repositório local ---------- |"
+cd JAR-Lisync
+
+java -version
+
+if [ $? = 0 ]; 
+then
+echo “java instalado”
+else 
+echo “java não instalado” 
+echo “gostaria de instalar o java? [s/n]” 
+read get 
+if [ \“$get\” == \“s\” ]; 
+then
+sudo apt install openjdk-17-jre -y 
+fi 
+fi 
+
+clear
+
+echo "| ---------- Processo finalizado ---------- |"
+echo "| ---------- Obrigado por instalar nossa aplicação! ---------- |"
+
+cd jar
+
+sudo chmod 777 JAR_Lisync.jar
+
+java -jar JAR_Lisync.jar
