@@ -4,8 +4,8 @@ nomeImagem="banco-lisync"
 nomeContainer="banco-lisync"
 portaHost=3306
 portaContainer=3306
-dirDockerfile="./container-bd"
-dirSQL="./container-bd/arquivos-sql"
+dirDockerfile="container-bd"
+dirSQL="arquivos-sql"
 
 if ! command -v docker &> /dev/null; then
         echo "$(tput setaf 4)[LIS]:$(tput setaf 7) O Docker não está instalado. Iniciando o processo de instalação..."
@@ -37,7 +37,11 @@ if ! command -v docker &> /dev/null; then
 
 docker pull mysql
 
-cat <<EOF > $dirDockerfile/Dockerfile
+mkdir $dirDockerfile
+cd $dirDockerfile
+touch Dockerfile
+
+cat <<EOF > Dockerfile
 
 FROM mysql:latest
 
@@ -53,7 +57,11 @@ EXPOSE 3306
 
 EOF
 
-cat <<EOF > $dirSQL/tabelas.sql
+mkdir $dirSQL
+cd $dirSQL
+touch tabelas.sql
+
+cat <<EOF > tabelas.sql
 
 CREATE DATABASE lisyncDB;
 USE lisyncDB;

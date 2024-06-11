@@ -1,7 +1,6 @@
+
 CREATE DATABASE lisyncDB;
 USE lisyncDB;
-
-/*------------------------------------- EMPRESA -------------------------------------*/
 
 CREATE  TABLE IF NOT EXISTS Empresa (
 	idEmpresa 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -11,7 +10,6 @@ CREATE  TABLE IF NOT EXISTS Empresa (
 	CONSTRAINT CHK_Plano CHECK (plano IN('Basico', 'Corporativo', 'Enterprise'))
     /*Interprise -> Enterprise*/
 );
-/*------------------------------------- AMBIENTE -------------------------------------*/
 
 CREATE TABLE IF NOT EXISTS Ambiente (
 	idAmbiente 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -21,8 +19,6 @@ CREATE TABLE IF NOT EXISTS Ambiente (
     
 CONSTRAINT fkEmpresaAmbiente FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa)
 );
-
-/*------------------------------------- USUÁRIO -------------------------------------*/
 
 CREATE TABLE IF NOT EXISTS Usuario (
 	idUsuario 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -36,8 +32,6 @@ CREATE TABLE IF NOT EXISTS Usuario (
 	CONSTRAINT fkEmpresa FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa),
 	CONSTRAINT fkGestor FOREIGN KEY (fkGestor) REFERENCES Usuario(idUsuario)
 );
-    
-/*------------------------------------- TELEVISÃO -------------------------------------*/
 
 CREATE TABLE IF NOT EXISTS Televisao (
 	idTelevisao 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -49,8 +43,6 @@ CREATE TABLE IF NOT EXISTS Televisao (
 	CONSTRAINT fkAmbiente FOREIGN KEY (fkAmbiente) REFERENCES Ambiente(idAmbiente)
 );
 
-/*------------------------------------- COMPONENTE -------------------------------------*/
-
 CREATE TABLE IF NOT EXISTS Componente (
 	idComponente 		INT PRIMARY KEY AUTO_INCREMENT,
 	modelo 			VARCHAR(225),
@@ -60,8 +52,6 @@ CREATE TABLE IF NOT EXISTS Componente (
     
 	CONSTRAINT fkTv FOREIGN KEY (fkTelevisao) REFERENCES Televisao(idTelevisao)
 );
-
-/*------------------------------------- JANELA -------------------------------------*/
 
 CREATE TABLE IF NOT EXISTS Janela (
 	idJanela 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -74,8 +64,6 @@ CREATE TABLE IF NOT EXISTS Janela (
 	CONSTRAINT fkTelevisaoJanela FOREIGN KEY (fkTelevisao) REFERENCES Televisao(idTelevisao)
 );
 
-/*------------------------------------- LOG PROCESSO -------------------------------------*/
-
 CREATE TABLE IF NOT EXISTS LogProcesso (
 	idLog 			INT PRIMARY KEY AUTO_INCREMENT,
 	pid 			INT,
@@ -87,8 +75,6 @@ CREATE TABLE IF NOT EXISTS LogProcesso (
 	CONSTRAINT fkComponenteLog FOREIGN KEY (fkComponente) REFERENCES Componente(idComponente)
 );
 
-/*------------------------------------- LOG COMPONENTE -------------------------------------*/
-
 CREATE TABLE IF NOT EXISTS LogComponente (
 	idLogComponente INT PRIMARY KEY AUTO_INCREMENT,
 	dataHora 		VARCHAR(45),
@@ -97,8 +83,6 @@ CREATE TABLE IF NOT EXISTS LogComponente (
     
 	CONSTRAINT fkComponenteLogComponente FOREIGN KEY (fkComponente) REFERENCES Componente(idComponente)
 );
-
-/*------------------------------------- COMANDO -------------------------------------*/
 
 CREATE TABLE IF NOT EXISTS Comando (
 	idComando 		INT PRIMARY KEY AUTO_INCREMENT,
@@ -109,14 +93,3 @@ CREATE TABLE IF NOT EXISTS Comando (
 	CONSTRAINT fkTelevisaoComando FOREIGN KEY (fkTelevisao) REFERENCES Televisao(idTelevisao)
 );
 
-/*------------------------------------- SELECTS -------------------------------------*/
-
-SELECT * FROM Janela;
-SELECT * FROM LogProcesso;
-SELECT * FROM LogComponente;
-SELECT * FROM Componente;
-SELECT * FROM Televisao;
-SELECT * FROM Ambiente;
-SELECT * FROM Empresa;
-SELECT * FROM Usuario;
-SELECT * FROM Comando;
